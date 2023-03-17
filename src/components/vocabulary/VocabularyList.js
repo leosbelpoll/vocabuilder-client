@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getEnv } from "../../util/env.util";
 
 function VocabularyList() {
-  const [categories, setCategories] = useState([]);
+  const [vocabularyList, setVocabularyList] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/vocabulary")
+    const API_URL = getEnv("API_URL");
+
+    fetch(API_URL + "/vocabulary")
       .then((r) => r.json())
-      .then((r) => setCategories(r));
+      .then((r) => setVocabularyList(r));
   }, []);
 
   return (
@@ -25,8 +28,8 @@ function VocabularyList() {
           </tr>
         </thead>
         <tbody>
-          {categories.map((vocabulary) => (
-            <tr>
+          {vocabularyList.map((vocabulary) => (
+            <tr key={vocabulary.id}>
               <td>{vocabulary.title}</td>
               <td>{vocabulary.description}</td>
               <td>...</td>

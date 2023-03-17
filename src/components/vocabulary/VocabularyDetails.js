@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import { getEnv } from "../../util/env.util";
+
 function VocabularyDetails() {
   const [vocabulary, setVocabulary] = useState([]);
 
   let { id } = useParams();
 
   useEffect(() => {
-    fetch("http://localhost:8080/vocabulary/" + id)
+    const API_URL = getEnv("API_URL");
+
+    fetch(API_URL + "/vocabulary/" + id)
       .then((r) => r.json())
       .then((r) => setVocabulary(r));
-  }, []);
+  }, [id]);
 
   if (!vocabulary) {
     return <p>... Loading ...</p>;

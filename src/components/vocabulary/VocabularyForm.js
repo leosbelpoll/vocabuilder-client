@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import { getEnv } from "../../util/env.util";
+
 function VocabularyForm(props) {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
@@ -12,7 +14,9 @@ function VocabularyForm(props) {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    fetch("http://localhost:8080/vocabulary", {
+    const API_URL = getEnv("API_URL");
+
+    fetch(API_URL + "/vocabulary", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
